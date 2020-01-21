@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol AddCheckListItemViewDelegate: class {
+    func addItemViewDidCancel(_ controller: AddCheckListItemViewController)
+    func addItemViewController(_ controller: AddCheckListItemViewController, DidFinishAdding item: CheckListItem)
+}
+
 class AddCheckListItemViewController: UITableViewController {
+
+    weak var delegate: AddCheckListItemViewDelegate?
 
     @IBOutlet weak var textFiled: UITextField!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
@@ -25,11 +32,17 @@ class AddCheckListItemViewController: UITableViewController {
 
     @IBAction func dismissViewController(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        delegate?.addItemViewDidCancel(self)
     }
     
     @IBAction func addNewItem(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-        print(textFiled.text!)
+        let item = CheckListItem()
+        if let textFieldText = textFiled.text {
+            item.text = textFieldText
+        }
+        item.checked = false
+        delegate?.addItemViewController(self, DidFinishAdding: item)
     }
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -63,3 +76,4 @@ extension AddCheckListItemViewController: UITextFieldDelegate {
     }
 
 }
+
