@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol AddCheckListItemViewDelegate: class {
-    func addItemViewDidCancel(_ controller: AddCheckListItemViewController)
-    func addItemViewController(_ controller: AddCheckListItemViewController, DidFinishAdding item: CheckListItem)
-    func addItemViewController(_ controller: AddCheckListItemViewController, DidFinishEditing item: CheckListItem)
+protocol ItemDetailViewControllerDelegate: class {
+    func ItemDetailViewDidCancel(_ controller: ItemDetailViewController)
+    func ItemDetailViewController(_ controller: ItemDetailViewController, DidFinishAdding item: CheckListItem)
+    func ItemDetailViewController(_ controller: ItemDetailViewController, DidFinishEditing item: CheckListItem)
 }
 
-class AddCheckListItemViewController: UITableViewController {
+class ItemDetailViewController: UITableViewController {
 
-    weak var delegate: AddCheckListItemViewDelegate?
+    weak var delegate: ItemDetailViewControllerDelegate?
     weak var toDoList: TodoList?
     weak var itemToEdit: CheckListItem?
 
@@ -39,20 +39,20 @@ class AddCheckListItemViewController: UITableViewController {
     }
 
     @IBAction func dismissViewController(_ sender: Any) {
-        delegate?.addItemViewDidCancel(self)
+        delegate?.ItemDetailViewDidCancel(self)
     }
     
     @IBAction func addNewItem(_ sender: Any) {
         if let item = itemToEdit, let text = textFiled.text {
             item.text = text
-            delegate?.addItemViewController(self, DidFinishEditing: item)
+            delegate?.ItemDetailViewController(self, DidFinishEditing: item)
         } else {
             if let item = toDoList?.newTodo() {
                 if let textFieldText = textFiled.text {
                     item.text = textFieldText
                 }
                 item.checked = false
-                delegate?.addItemViewController(self, DidFinishAdding: item)
+                delegate?.ItemDetailViewController(self, DidFinishAdding: item)
             }
         }
     }
@@ -63,7 +63,7 @@ class AddCheckListItemViewController: UITableViewController {
 }
 
 
-extension AddCheckListItemViewController: UITextFieldDelegate {
+extension ItemDetailViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textFiled.resignFirstResponder()
