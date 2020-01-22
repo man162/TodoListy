@@ -18,6 +18,7 @@
 		6BA7687423D11AED00C7017A /* CheckListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA7687323D11AED00C7017A /* CheckListModel.swift */; };
 		6BA7687623D216F300C7017A /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA7687523D216F300C7017A /* TodoList.swift */; };
 		6BA7687A23D2300D00C7017A /* AddCheckListItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA7687923D2300D00C7017A /* AddCheckListItemViewController.swift */; };
+		6BEF0CD623D8D7DC007B0484 /* CheckListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF0CD523D8D7DC007B0484 /* CheckListTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		6BA7687323D11AED00C7017A /* CheckListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListModel.swift; sourceTree = "<group>"; };
 		6BA7687523D216F300C7017A /* TodoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		6BA7687923D2300D00C7017A /* AddCheckListItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCheckListItemViewController.swift; sourceTree = "<group>"; };
+		6BEF0CD523D8D7DC007B0484 /* CheckListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 			children = (
 				6BA7684023D0CBE300C7017A /* CheckListViewController.swift */,
 				6BA7687923D2300D00C7017A /* AddCheckListItemViewController.swift */,
+				6BEF0CD523D8D7DC007B0484 /* CheckListTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6BEF0CD623D8D7DC007B0484 /* CheckListTableViewCell.swift in Sources */,
 				6BA7687A23D2300D00C7017A /* AddCheckListItemViewController.swift in Sources */,
 				6BA7687623D216F300C7017A /* TodoList.swift in Sources */,
 				6BA7684123D0CBE300C7017A /* CheckListViewController.swift in Sources */,
