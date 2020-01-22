@@ -8,7 +8,17 @@
 
 import UIKit
 
-class AddCheckListItemViewController: UITableViewController {
+protocol ItemDetailViewControllerDelegate: class {
+    func ItemDetailViewDidCancel(_ controller: ItemDetailViewController)
+    func ItemDetailViewController(_ controller: ItemDetailViewController, DidFinishAdding item: CheckListItem)
+    func ItemDetailViewController(_ controller: ItemDetailViewController, DidFinishEditing item: CheckListItem)
+}
+
+class ItemDetailViewController: UITableViewController {
+
+    weak var delegate: ItemDetailViewControllerDelegate?
+    weak var toDoList: TodoList?
+    weak var itemToEdit: CheckListItem?
 
     @IBOutlet weak var textFiled: UITextField!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
@@ -17,6 +27,11 @@ class AddCheckListItemViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textFiled.delegate = self
+        if let item = itemToEdit {
+            title = "Edit item"
+            textFiled.text = item.text
+            addBarButton.isEnabled = true
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -24,12 +39,22 @@ class AddCheckListItemViewController: UITableViewController {
     }
 
     @IBAction func dismissViewController(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        delegate?.ItemDetailViewDidCancel(self)
     }
     
     @IBAction func addNewItem(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        print(textFiled.text!)
+        if let item = itemToEdit, let text = textFiled.text {
+            item.text = text
+            delegate?.ItemDetailViewController(self, DidFinishEditing: item)
+        } else {
+            if let item = toDoList?.newTodo() {
+                if let textFieldText = textFiled.text {
+                    item.text = textFieldText
+                }
+                item.checked = false
+                delegate?.ItemDetailViewController(self, DidFinishAdding: item)
+            }
+        }
     }
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
@@ -38,7 +63,7 @@ class AddCheckListItemViewController: UITableViewController {
 }
 
 
-extension AddCheckListItemViewController: UITextFieldDelegate {
+extension ItemDetailViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textFiled.resignFirstResponder()
@@ -49,7 +74,7 @@ extension AddCheckListItemViewController: UITextFieldDelegate {
 
         guard let oldText = textFiled.text,
             let stringRange = Range(range, in: oldText) else {
-            return false
+                return false
         }
 
         let newText = oldText.replacingCharacters(in: stringRange, with: string)
@@ -63,3 +88,4 @@ extension AddCheckListItemViewController: UITextFieldDelegate {
     }
 
 }
+
