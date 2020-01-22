@@ -20,6 +20,13 @@ class CheckListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
+        tableView.allowsMultipleSelectionDuringEditing = true
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: true)
+        tableView.setEditing(tableView.isEditing, animated: true)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,8 +42,12 @@ class CheckListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            return
+        }
         if let cell = tableView.cellForRow(at: indexPath) {
             let item = todoList.todos[indexPath.row]
+            item.toggleChecked()
             configCheckmark(for: cell, with: item)
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -48,6 +59,12 @@ class CheckListViewController: UITableViewController {
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
 
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        todoList.move(item: todoList.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+        tableView.reloadData()
+    }
+
+
     func configCheckmark(for cell:UITableViewCell, with item: CheckListItem) {
         guard let checkMarkCell = cell as? CheckListTableViewCell else {
             return
@@ -57,7 +74,6 @@ class CheckListViewController: UITableViewController {
         } else {
             checkMarkCell.checkmarkLabel.text = ""
         }
-        item.toggleChecked()
     }
 
     func configText(for cell: UITableViewCell, with item: CheckListItem) {
@@ -93,6 +109,19 @@ extension CheckListViewController {
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
+    }
+
+    @IBAction func deleteItems(_ sender: Any) {
+        if let selectedItems = tableView.indexPathsForSelectedRows {
+            var items = [CheckListItem]()
+            for indexPath in selectedItems {
+                items.append(todoList.todos[indexPath.row])
+            }
+            todoList.remove(items: items)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: selectedItems, with: .automatic)
+            tableView.endUpdates()
+        }
     }
 
 }
