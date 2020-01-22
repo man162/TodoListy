@@ -11,7 +11,7 @@ import UIKit
 class CheckListViewController: UITableViewController {
 
     var todoList: TodoList
-
+    
     required init?(coder aDecoder: NSCoder) {
         todoList = TodoList()
         super.init(coder: aDecoder)
@@ -49,10 +49,13 @@ class CheckListViewController: UITableViewController {
     }
 
     func configCheckmark(for cell:UITableViewCell, with item: CheckListItem) {
+        guard let checkMark = cell.viewWithTag(2) as? UILabel else {
+            return
+        }
         if item.checked {
-            cell.accessoryType = .none
+            checkMark.text = "√"
         } else {
-            cell.accessoryType = .checkmark
+            checkMark.text = ""
         }
         item.toggleChecked()
     }
@@ -67,6 +70,16 @@ class CheckListViewController: UITableViewController {
         if segue.identifier == "AddItemSegue" {
             if let addItemViewController = segue.destination as? AddCheckListItemViewController {
                 addItemViewController.delegate = self
+                addItemViewController.toDoList = todoList
+            }
+        } else if segue.identifier == "EditItem" {
+            if let addItemViewController = segue.destination as? AddCheckListItemViewController {
+                if let cell = sender as? UITableViewCell {
+                    let indexPath = tableView.indexPath(for: cell)
+                    let item = todoList.todos[indexPath!.row]
+                    addItemViewController.itemToEdit = item
+                    addItemViewController.delegate = self
+                }
             }
         }
     }
@@ -92,12 +105,20 @@ extension CheckListViewController: AddCheckListItemViewDelegate {
 
     func addItemViewController(_ controller: AddCheckListItemViewController, DidFinishAdding item: CheckListItem) {
         navigationController?.popViewController(animated: true)
-        let rowIndex = todoList.todos.count
-        todoList.todos.append(item)
+        let rowIndex = todoList.todos.count - 1
         let indexPath = IndexPath(row: rowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
     }
 
+    func addItemViewController(_ controller: AddCheckListItemViewController, DidFinishEditing item: CheckListItem) {
+        if let index = todoList.todos.lastIndex(of: item) {
+            let indexPath = IndexPath(row : index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath) {
+                configText(for: cell, with: item)
+            }
+        }
+        navigationController?.popViewController(animated: true)
+    }
 
 }

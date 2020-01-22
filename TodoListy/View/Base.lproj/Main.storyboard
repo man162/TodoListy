@@ -15,27 +15,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="CheckListItem" rowHeight="44" id="w7d-Z5-Ltz">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="CheckListItem" rowHeight="44" id="w7d-Z5-Ltz">
                                 <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="w7d-Z5-Ltz" id="A2t-yd-CAo">
-                                    <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6q-kw-HnG">
+                                            <rect key="frame" x="10" y="10" width="20" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="879-Q0-LJk"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKI-vP-fRv">
-                                            <rect key="frame" x="20" y="5" width="330" height="34"/>
+                                            <rect key="frame" x="40" y="10" width="300.5" height="24"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="cKI-vP-fRv" firstAttribute="top" secondItem="A2t-yd-CAo" secondAttribute="top" constant="5" id="0ea-NE-0eV"/>
-                                        <constraint firstAttribute="bottom" secondItem="cKI-vP-fRv" secondAttribute="bottom" constant="5" id="CIS-3Z-ivG"/>
-                                        <constraint firstItem="cKI-vP-fRv" firstAttribute="leading" secondItem="A2t-yd-CAo" secondAttribute="leading" constant="20" id="IfY-53-O5u"/>
-                                        <constraint firstAttribute="trailing" secondItem="cKI-vP-fRv" secondAttribute="trailing" constant="20" id="gU8-ud-ThX"/>
+                                        <constraint firstAttribute="trailing" secondItem="cKI-vP-fRv" secondAttribute="trailing" constant="10" id="6SW-AK-hR9"/>
+                                        <constraint firstItem="cKI-vP-fRv" firstAttribute="top" secondItem="A2t-yd-CAo" secondAttribute="top" constant="10" id="Sya-kS-Wu4"/>
+                                        <constraint firstItem="z6q-kw-HnG" firstAttribute="top" secondItem="A2t-yd-CAo" secondAttribute="top" constant="10" id="WEG-So-PgS"/>
+                                        <constraint firstItem="cKI-vP-fRv" firstAttribute="leading" secondItem="z6q-kw-HnG" secondAttribute="trailing" constant="10" id="fyh-7e-3mi"/>
+                                        <constraint firstAttribute="bottom" secondItem="cKI-vP-fRv" secondAttribute="bottom" constant="10" id="t67-gc-3sI"/>
+                                        <constraint firstAttribute="bottom" secondItem="z6q-kw-HnG" secondAttribute="bottom" constant="10" id="w1J-Ti-Tej"/>
+                                        <constraint firstItem="z6q-kw-HnG" firstAttribute="leading" secondItem="A2t-yd-CAo" secondAttribute="leading" constant="10" id="y4U-QE-yN1"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="2wy-Jy-MRz" kind="show" identifier="EditItem" trigger="accessoryAction" id="UG6-Bj-d2Y"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -107,7 +122,7 @@
                                 <action selector="dismissViewController:" destination="2wy-Jy-MRz" id="Y6D-Gj-39n"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" id="xbF-tI-8s6">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Done" id="xbF-tI-8s6">
                             <connections>
                                 <action selector="addNewItem:" destination="2wy-Jy-MRz" id="0vl-xV-kD3"/>
                             </connections>
@@ -144,4 +159,7 @@
             <point key="canvasLocation" x="134.78260869565219" y="104.46428571428571"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="UG6-Bj-d2Y"/>
+    </inferredMetricsTieBreakers>
 </document>
